@@ -53,6 +53,7 @@
 
 // src/services/post.service.js
 import pool from '../config/db.js';
+import { ApiError } from '../utils/ApiError.js';
 
 export const getAllPosts = async () => {
     const [posts] = await pool.query('SELECT * FROM posts');
@@ -61,7 +62,10 @@ export const getAllPosts = async () => {
 
 export const getPostById = async (id) => {
     const [rows] = await pool.query('SELECT * FROM posts WHERE id = ?', [id]);
-    return rows[0] || null;
+    if (!rows[0]) {
+        throw new ApiError(404, "Post not found"); // Throws a specific error
+    }
+    return rows[0];
 };
 
 export const createPost = async (postData) => {
