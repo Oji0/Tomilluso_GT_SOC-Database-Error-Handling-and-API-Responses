@@ -1,8 +1,13 @@
 import express from 'express';
+import dotenv from 'dotenv';
 import postRoutes from './src/routes/post.routes.js';
 
+// Load environment variables from .env file
+dotenv.config();
+
 const app = express();
-const port = 3000;
+// Use the PORT from environment variables, with a fallback to 3000
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
