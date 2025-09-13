@@ -1,4 +1,3 @@
-// index.js
 import express from 'express';
 import postRoutes from './src/routes/post.routes.js';
 import { testConnection } from './src/config/db.js'; // Import the test function
