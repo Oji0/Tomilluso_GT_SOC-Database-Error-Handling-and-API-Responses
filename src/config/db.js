@@ -5,10 +5,10 @@ dotenv.config(); // Loads environment variables from .env file
 
 // Create a connection pool
 const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'admin',
-    database: 'blogdatabase',
+    host: process.env.localhost,
+    user: process.env.root,
+    password: process.env.admin,
+    database: process.env.blogdatabase,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
