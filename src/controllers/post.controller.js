@@ -1,5 +1,6 @@
 // import * as postService from '../services/post.service.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
+import asyncHandler from 'express-async-handler';
 
     export const getAllPosts = async (req, res) => {
     try {
@@ -12,14 +13,14 @@ import { ApiResponse } from '../utils/ApiResponse.js';
     }
 };
 
-export const getPostById = (req, res) => {
+export const getPostById = asyncHandler(async (req, res) => {
     const postId = parseInt(req.params.id, 10);
-    const post = postService.getPostById(postId);
-    if (!post) {
-        return res.status(404).json({ message: 'Post not found.' });
-    }
-    res.json(post);
-};
+    const post = await postService.getPostById(postId);
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, post, "Post retrieved successfully"));
+});
 
 export const createPost = async (req, res) => {
     try {
