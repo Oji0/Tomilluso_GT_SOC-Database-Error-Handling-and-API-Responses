@@ -1,5 +1,5 @@
 // import * as postService from '../services/post.service.js';
-import { ApiResponse } from '../utils/ApiResponse.js';
+import { ApiResponse } from '../utils/APIResponse.js';
 
     export const getAllPosts = async (req, res) => {
     try {
