@@ -32,6 +32,17 @@ export const updatePost = (req, res) => {
     res.json(post);
 };
 
+export const patchPost = (req, res) => {
+    const postId = parseInt(req.params.id, 10);
+    const updates = req.body;
+
+    const updatedPost = postService.updatePostPartial(postId, updates);
+    if (!updatedPost) {
+        return res.status(404).json({ message: 'Post not found.' });
+    }
+    res.json(updatedPost);
+};
+
 export const deletePost = (req, res) => {
     const postId = parseInt(req.params.id, 10);
     const success = postService.deletePost(postId);
