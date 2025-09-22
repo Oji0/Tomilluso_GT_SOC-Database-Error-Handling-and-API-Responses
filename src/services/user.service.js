@@ -43,3 +43,11 @@ export async function getAllUsers() {
 
   return rows;
 }
+
+export async function getPostsByAuthorId(userId) {
+  const [rows] = await db.execute(
+    'SELECT * FROM posts WHERE authorId = ?',
+    [userId]
+  );
+  return rows;
+}
