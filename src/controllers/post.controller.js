@@ -1,4 +1,4 @@
-// import * as postService from '../services/post.service.js';
+import * as postService from '../services/post.service.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import asyncHandler from 'express-async-handler';
 
