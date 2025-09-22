@@ -1,26 +1,35 @@
 import pool from '../config/db.js';
 import { ApiError } from '../utils/ApiError.js';
 
-export const createPost = async (postData) => {
-    const { title, content, authorId } = postData;
-
-    try {
-        const [result] = await pool.query(
-            'INSERT INTO posts (title, content, authorId) VALUES (?, ?, ?)',
-            [title, content, authorId]
-        );
-
-        const newPostId = result.insertId;
-        return getPostById(newPostId);
-
-    } catch (error) {
-        if (error.code === 'ER_NO_REFERENCED_ROW_2') {
-            throw new ApiError(400, 'Invalid author ID. User does not exist.');
-        }
-
-        throw error;
-    }
+export const getPostById = async (id) => {
+  const [rows] = await pool.query('SELECT * FROM posts WHERE id = ?', [id]);
+  if (!rows[0]) {
+    throw new ApiError(404, 'Post not found');
+  }
+  return rows[0];
 };
+
+export const createPost = async (postData) => {
+  const { title, content, authorId } = postData;
+
+  try {
+    const [result] = await pool.query(
+      'INSERT INTO posts (title, content, authorId) VALUES (?, ?, ?)',
+      [title, content, authorId]
+    );
+
+    const newPostId = result.insertId;
+    return await getPostById(newPostId);
+
+  } catch (error) {
+    if (error.code === 'ER_NO_REFERENCED_ROW_2') {
+      throw new ApiError(400, 'Invalid author ID. User does not exist.');
+    }
+
+    throw error;
+  }
+};
+
 
 // let posts = [
 //     { id: 1, title: 'First Post', content: 'This is the first post.' },

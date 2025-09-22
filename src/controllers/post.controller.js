@@ -14,9 +14,15 @@ export const getPostById = asyncHandler(async (req, res) => {
 });
 
 export const createPost = asyncHandler(async (req, res) => {
-  const newPost = await postService.createPost(req.body);
-  res.status(201).json(new ApiResponse(201, newPost, 'Post created successfully'));
+  try {
+    const newPost = await postService.createPost(req.body);
+    res.status(201).json(new ApiResponse(201, newPost, 'Post created successfully'));
+  } catch (error) {
+    console.error('Create Post Error:', error); 
+    throw error;
+  }
 });
+
 
 export const updatePost = asyncHandler(async (req, res) => {
   const postId = parseInt(req.params.id, 10);
