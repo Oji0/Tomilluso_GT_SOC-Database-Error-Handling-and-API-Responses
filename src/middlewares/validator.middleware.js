@@ -24,8 +24,6 @@ export const validatePost = [
     },
 ];
 
-import { body, validationResult } from 'express-validator';
-
 export const validateComment = [
   body('content')
     .trim()
