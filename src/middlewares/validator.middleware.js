@@ -23,3 +23,25 @@ export const validatePost = [
         next();
     },
 ];
+
+import { body, validationResult } from 'express-validator';
+
+export const validateComment = [
+  body('content')
+    .trim()
+    .notEmpty()
+    .withMessage('Content is required.'),
+  body('postId')
+    .isInt({ min: 1 })
+    .withMessage('A valid post ID is required.'),
+  body('authorId')
+    .isInt({ min: 1 })
+    .withMessage('A valid author ID is required.'),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];

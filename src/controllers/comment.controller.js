@@ -1,4 +1,11 @@
 import * as commentService from '../services/comment.service.js';
+import { ApiResponse } from '../utils/ApiResponse.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
+
+export const createComment = asyncHandler(async (req, res) => {
+  const comment = await commentService.createComment(req.body);
+  res.status(201).json(new ApiResponse(201, comment, 'Comment created successfully'));
+});
 
 export const getAllComments = (req, res) => {
   const allComments = commentService.getAllComments();
