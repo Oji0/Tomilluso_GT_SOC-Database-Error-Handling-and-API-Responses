@@ -1,3 +1,6 @@
+import pool from '../config/db.js';
+import { ApiError } from '../utils/ApiError.js';
+
 export const createPost = async (postData) => {
     const { title, content, authorId } = postData;
 
