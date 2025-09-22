@@ -7,16 +7,17 @@ export const createComment = asyncHandler(async (req, res) => {
   res.status(201).json(new ApiResponse(201, comment, 'Comment created successfully'));
 });
 
-export const getAllComments = (req, res) => {
-  const allComments = commentService.getAllComments();
-  res.json(allComments);
-};
+export const getAllComments = asyncHandler(async (req, res) => {
+  const allComments = await commentService.getAllComments();
+  res.status(200).json(new ApiResponse(200, allComments, 'All comments retrieved'));
+});
 
-export const getCommentsForPost = (req, res) => {
+export const getCommentsForPost = asyncHandler(async (req, res) => {
   const postId = parseInt(req.params.postId, 10);
-  const comments = commentService.getCommentsByPostId(postId);
-  res.json(comments);
-};
+  const comments = await commentService.getCommentsByPostId(postId);
+  res.status(200).json(new ApiResponse(200, comments, 'Comments for post retrieved'));
+});
+
 
 export const createCommentForPost = (req, res) => {
   const postId = parseInt(req.params.postId, 10);

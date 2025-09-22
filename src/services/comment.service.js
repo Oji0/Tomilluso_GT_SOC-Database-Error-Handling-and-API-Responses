@@ -18,3 +18,13 @@ export const createComment = async ({ content, postId, authorId }) => {
     throw error;
   }
 };
+
+export const getAllComments = async () => {
+  const [rows] = await pool.query('SELECT * FROM comments');
+  return rows;
+};
+
+export const getCommentsByPostId = async (postId) => {
+  const [rows] = await pool.query('SELECT * FROM comments WHERE postId = ?', [postId]);
+  return rows;
+};
