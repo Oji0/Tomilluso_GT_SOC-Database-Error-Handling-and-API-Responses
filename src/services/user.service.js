@@ -1,6 +1,5 @@
 import db from '../config/db.js';
 import { ApiError } from '../utils/ApiError.js';
-import { getUserById } from './user.service.js';
 
 export async function createUser(userData) {
   const { username, email } = userData;
@@ -22,4 +21,25 @@ export async function createUser(userData) {
 
     throw error;
   }
+}
+
+export async function getUserById(id) {
+  const [rows] = await db.execute(
+    'SELECT * FROM users WHERE id = ?',
+    [id]
+  );
+
+  if (rows.length === 0) {
+    throw new ApiError(404, 'User not found.');
+  }
+
+  return rows[0];
+}
+
+export async function getAllUsers() {
+  const [rows] = await db.execute(
+    'SELECT * FROM users'
+  );
+
+  return rows;
 }
