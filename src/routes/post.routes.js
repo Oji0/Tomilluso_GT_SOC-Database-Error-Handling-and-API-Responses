@@ -6,13 +6,10 @@ const router = Router();
 
 router.post('/', validatePost, postController.createPost);
 router.put('/:id', validatePost, postController.updatePost);
-router.patch('/:id', postController.partiallyUpdatePost);
+router.patch('/:id', postController.patchPost);
 
 router.get('/', postController.getAllPosts);
-router.post('/', postController.createPost);
 router.get('/:id', postController.getPostById);
-router.put('/:id', postController.updatePost);
-router.patch('/:id', postController.patchPost);
 router.delete('/:id', postController.deletePost);
 
 export default router;
